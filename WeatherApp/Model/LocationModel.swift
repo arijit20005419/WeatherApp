@@ -25,8 +25,8 @@ class LocationModel : NSObject, CLLocationManagerDelegate{
     
     static var instance = LocationModel()
     
+    // Start tracking according to Permission
     func startTracking() -> Bool{
-        
         if isPermission{
             lManager.startUpdatingLocation()
             return true
@@ -34,6 +34,7 @@ class LocationModel : NSObject, CLLocationManagerDelegate{
         return false
     }
     
+    // Converts lat and lon to Address
     func getCurrentAddr() async throws{
         let gc = CLGeocoder()
         if let loc = currentLocation {
@@ -49,6 +50,7 @@ class LocationModel : NSObject, CLLocationManagerDelegate{
         }
     }
     
+    // Converts Address to lat & lon
     func getCurrentCoordinates(addr : String) async throws{
         let gc = CLGeocoder()
         do {
@@ -71,6 +73,7 @@ class LocationModel : NSObject, CLLocationManagerDelegate{
         }
     }
     
+    // Access Permission Status
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         switch status {

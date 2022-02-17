@@ -19,13 +19,23 @@ class MainVC: UIViewController {
     
     let locViewModel = LocationViewModel()
     
-    let locPicker = ["Mumbai", "Delhi", "Kolkata"]
+    let locPicker = ["Please Select Location", "Mumbai", "Delhi", "Kolkata"]
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         continueBtn.isEnabled = false
+        
+        locationPicker.dataSource = self
+        locationPicker.delegate = self
+        
+        searchT.delegate = self
+        
+//        if searchT.text != "" {
+//            continueBtn.isEnabled = true
+//        }
+        
         // Do any additional setup after loading the view.
     }
     
@@ -45,6 +55,22 @@ class MainVC: UIViewController {
     
     
     @IBAction func continueClick(_ sender: Any) {
+        print("Continue Btn pressed")
+        if locViewModel.didLocationFound{
+            if let vc = storyboard?.instantiateViewController(identifier: "basicreportvc") as? BasicReportVC{
+                show(vc, sender: self)
+            }
+        }
+        else{
+            print("Failed")
+            let alertC = UIAlertController(title: "Navigation Failed", message: "Unable to Navigate to next Screen", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            alertC.addAction(okAction)
+            
+            present(alertC, animated: true, completion: nil)
+        }
     }
     
 }
@@ -60,10 +86,45 @@ extension MainVC : UIPickerViewDataSource{
     }
 }
 
-//extension MainVC : UIPickerViewDelegate{
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        <#code#>
-//    }
-//    
-//    pic
-//}
+extension MainVC : UIPickerViewDelegate{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return locPicker[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if row != 0{
+            Task{
+                do {
+                    if await locViewModel.getAddressNow(locPicker[row]){
+                        searchT.text = locPicker[row]
+                        continueBtn.isEnabled = true
+                    }
+                }
+            }
+        }
+        else{
+            searchT.text = ""
+            continueBtn.isEnabled = false
+        }
+    }
+}
+
+extension MainVC : UITextFieldDelegate{
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let search = textField.text else {
+            continueBtn.isEnabled = false
+            return false
+        }
+
+        Task{
+            do {
+                if await locViewModel.getAddressNow(search){
+                    continueBtn.isEnabled = true
+                }
+            }
+        }
+        return true
+    }
+ 
+}
