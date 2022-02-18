@@ -17,9 +17,10 @@ class MainVC: UIViewController {
     
     @IBOutlet weak var continueBtn: UIButton!
     
+    // imstance of View Model
     let locViewModel = LocationViewModel()
     
-    let locPicker = ["Please Select Location", "Mumbai", "Delhi", "Kolkata"]
+    let locPicker = ["Please Select Location", "America", "London", "Kolkata"]
     
     override func viewDidLoad() {
         
@@ -31,15 +32,9 @@ class MainVC: UIViewController {
         locationPicker.delegate = self
         
         searchT.delegate = self
-        
-//        if searchT.text != "" {
-//            continueBtn.isEnabled = true
-//        }
-        
-        // Do any additional setup after loading the view.
     }
     
-    
+    // Activate when navigate icon btn is pressed
     @IBAction func liveLocationClick(_ sender: Any) {
         Task{
             do {
@@ -53,12 +48,14 @@ class MainVC: UIViewController {
         }
     }
     
-    
+    // Continue Btn
     @IBAction func continueClick(_ sender: Any) {
         print("Continue Btn pressed")
         if locViewModel.didLocationFound{
             if let vc = storyboard?.instantiateViewController(identifier: "basicreportvc") as? BasicReportVC{
                 show(vc, sender: self)
+                vc.latitude = locViewModel.coord["lat"] ?? ""
+                vc.longitude = locViewModel.coord["lon"] ?? ""
             }
         }
         else{
@@ -75,7 +72,7 @@ class MainVC: UIViewController {
     
 }
 
-
+// Picker DataSource
 extension MainVC : UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -86,6 +83,7 @@ extension MainVC : UIPickerViewDataSource{
     }
 }
 
+// Picker Deligate
 extension MainVC : UIPickerViewDelegate{
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return locPicker[row]
@@ -109,6 +107,8 @@ extension MainVC : UIPickerViewDelegate{
     }
 }
 
+
+// When manual entry "Continue" btn is enable
 extension MainVC : UITextFieldDelegate{
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -8,38 +8,32 @@
 import Foundation
 
 struct OpenWeather : Codable{
-    var weatherData : [WeatherData]
-}
-
-struct WeatherData : Codable{
-    var lat : String
-    var lon : String
     var timezone : String
     var current : Current
-//    var hourly : [Current]
-//    var daily : [Daily]
+    var hourly : [Current]
+    var daily : [Daily]
 }
-
 
 // current or hourly  -> Same struct
 struct Current : Codable{
-    var temp : Double
-    var humidity : Double
-    var wind_speed : Double
+    var dt : Int
+    var temp : Double                 //curent temprature
+    var feels_like : Double           //accurate temprature
+    var pressure : Int                //pressure
+    var humidity : Int                //Humidity
+    var wind_speed : Double           //wind speed
+    var visibility : Int               //visibility
     var weather : [Weather]
 }
-
-//struct Hourly : Codable{
-//
-//}
 
 // daily
 struct Daily : Codable{
-    var temp : [Temp]
+    var dt : Int
+    var temp : Temperature
     var weather : [Weather]
 }
 
-struct Temp : Codable{
+struct Temperature : Codable{
     var min : Double
     var max : Double
 }
@@ -47,3 +41,9 @@ struct Temp : Codable{
 struct Weather : Codable{
     var icon : String
 }
+
+
+
+//struct Hourly : Codable{
+//
+//}

@@ -15,7 +15,7 @@ class ApiHandlerModel{
     static var instance = ApiHandlerModel()
     let apiId = "a623c991fa2218fa530343c93ec0cc9c"
     
-    func fetchData(lat : String, lon : String) {
+    func fetchData(lat : String, lon : String, completion : @escaping (OpenWeather) -> Void){
         let apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=alerts,minutely&appid=\(apiId)"
         
         print(apiURL,"\n\n")
@@ -25,13 +25,36 @@ class ApiHandlerModel{
             return
         }
         
-        Session.default.request(url, method: .get,encoding: URLEncoding.default, requestModifier: nil).validate(statusCode: 200..<300).responseDecodable(of: [OpenWeather].self) { response in
-            switch response.result {
-            case .success(let data) :
-                print(data)
-            case .failure(let err) :
-                print(err)
+        Session.default.request(url).responseDecodable(of: OpenWeather.self) { (response) in
+            if response.error == nil{
+                switch response.result {
+                case .success(let data) :
+//                    print(data)
+                    completion(data)
+                case .failure(let err) :
+                    print(err)
+                    print(err.localizedDescription)
+                }
+            }
+            else{
+                print("Error: \(String(describing: response.error))")
             }
         }
     }
+    
+    
+    func dowloadImg(imgUrl : String, completion : @escaping (Data) -> Void){
+        if let url = URL(string: imgUrl){
+            Session.default.download(url).responseData { imgData in
+                switch imgData.result{
+                case .success(let data):
+                    print(data)
+                    completion(data)
+                case .failure(let err) :
+                    print(err)
+                }
+            }
+        }
+    }
+    
 }

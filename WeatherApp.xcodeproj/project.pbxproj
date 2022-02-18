@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D317D1E327BD16510067CB4D /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D317D1E227BD16510067CB4D /* LocationViewModel.swift */; };
 		D31B365D27BBC0AA0021689E /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31B365C27BBC0AA0021689E /* LocationModel.swift */; };
+		D35CA63727BF70AF00F2B36B /* HourlyCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35CA63627BF70AF00F2B36B /* HourlyCollectionCell.swift */; };
+		D35CA63B27BFA44200F2B36B /* DailyCustomCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35CA63A27BFA44200F2B36B /* DailyCustomCells.swift */; };
 		D375868627BE457A0061B158 /* ApiHandlerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D375868527BE457A0061B158 /* ApiHandlerModel.swift */; };
 		D39684F627BB938A00042879 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39684F527BB938A00042879 /* MainVC.swift */; };
 		D39684F827BB93B300042879 /* BasicReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39684F727BB93B300042879 /* BasicReportVC.swift */; };
@@ -29,6 +31,8 @@
 		2D6B01D322A270615DEECAA0 /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		D317D1E227BD16510067CB4D /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		D31B365C27BBC0AA0021689E /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		D35CA63627BF70AF00F2B36B /* HourlyCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCollectionCell.swift; sourceTree = "<group>"; };
+		D35CA63A27BFA44200F2B36B /* DailyCustomCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCustomCells.swift; sourceTree = "<group>"; };
 		D375868527BE457A0061B158 /* ApiHandlerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandlerModel.swift; sourceTree = "<group>"; };
 		D39684F527BB938A00042879 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		D39684F727BB93B300042879 /* BasicReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicReportVC.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				D39684F527BB938A00042879 /* MainVC.swift */,
 				D39684F727BB93B300042879 /* BasicReportVC.swift */,
 				D39684F927BB93C900042879 /* DetailReportVC.swift */,
+				D35CA63627BF70AF00F2B36B /* HourlyCollectionCell.swift */,
+				D35CA63A27BFA44200F2B36B /* DailyCustomCells.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -257,9 +263,11 @@
 				D39684F827BB93B300042879 /* BasicReportVC.swift in Sources */,
 				D3FD287F27BE535E00847836 /* ApiViewModel.swift in Sources */,
 				D3FD288127BE56A400847836 /* WeatherModel.swift in Sources */,
+				D35CA63727BF70AF00F2B36B /* HourlyCollectionCell.swift in Sources */,
 				D39684F627BB938A00042879 /* MainVC.swift in Sources */,
 				D317D1E327BD16510067CB4D /* LocationViewModel.swift in Sources */,
 				D31B365D27BBC0AA0021689E /* LocationModel.swift in Sources */,
+				D35CA63B27BFA44200F2B36B /* DailyCustomCells.swift in Sources */,
 				D3AF1B9C27B9624B002FD65A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +421,7 @@
 				DEVELOPMENT_TEAM = GTZ8UP7R57;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please Allow Access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -442,6 +451,7 @@
 				DEVELOPMENT_TEAM = GTZ8UP7R57;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please Allow Access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
