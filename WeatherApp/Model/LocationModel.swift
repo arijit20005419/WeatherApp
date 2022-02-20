@@ -78,11 +78,11 @@ class LocationModel : NSObject, CLLocationManagerDelegate{
         
         switch status {
         case .notDetermined, .restricted, .denied:
-              isPermission = false
+            isPermission = false
         case .authorizedAlways, .authorizedWhenInUse:
-              isPermission = true
+            isPermission = true
         default :
-              isPermission = false
+            isPermission = false
         }
     }
     

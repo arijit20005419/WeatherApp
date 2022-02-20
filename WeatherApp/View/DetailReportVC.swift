@@ -26,9 +26,9 @@ class DetailReportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setting data
+        // setting date
         currentDates.text = String(Date().formatted(date: .abbreviated, time: .omitted))
-
+        
         // setting temp according to selected tempSetting
         feelsLikeL.text = tempViewModel.setTemperatur(temp: (detailData?.current.feels_like ?? 0.0), convertedTo: detailTempSetting)
         
@@ -36,9 +36,6 @@ class DetailReportVC: UIViewController {
         pressureL.text = String(detailData?.current.pressure ?? 0)
         
         tbl.dataSource = self // table datasource added
-        
-        
-        // Do any additional setup after loading the view.
     }
 }
 

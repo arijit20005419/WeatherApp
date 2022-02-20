@@ -18,7 +18,7 @@ class LocationViewModel{
     func startTrackingNow() async throws-> Bool{
         if locationModel.startTracking(){
             do {
-               try await locationModel.getCurrentAddr()
+                try await locationModel.getCurrentAddr()
             } catch{
                 throw error
             }
@@ -28,12 +28,6 @@ class LocationViewModel{
             if !addressOfUser.isEmpty{
                 didLocationFound = true
             }
-            
-//            print(didLocationFound)
-//            print("Lat : \(coord["lat"])")
-//            print("Lat : \(coord["lon"])")
-//            print("Addr : \(addressOfUser)")
-            
             return true
         }
         return false
@@ -50,11 +44,6 @@ class LocationViewModel{
             coord["lat"] = String(locationModel.currentLocation?.coordinate.latitude ?? 0.0)
             coord["lon"] = String(locationModel.currentLocation?.coordinate.longitude ?? 0.0)
             didLocationFound = true
-           
-//            print(didLocationFound)
-//            print("Lat : \(coord["lat"])")
-//            print("Lon : \(coord["lon"])")
-//            print("Addr : \(addressOfUser)")
         }
         return true
     }

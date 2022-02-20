@@ -52,7 +52,7 @@ class BasicReportVC: UIViewController {
         isLoading.style = .large
         isLoading.color = UIColor(named: "white")
         
-        // seting labels to nil
+        // seting labels to default, i.e., nil
         timeZoneL.text = nil
         dateTimeL.text = nil
         weatherImg.image = nil
@@ -64,8 +64,8 @@ class BasicReportVC: UIViewController {
         windIndL.text = nil
         
         apiViewM.getData(lati: latitude, longi: longitude) { data in
-            //            adding API data to view model
-            self.apiViewM.finalData = data
+            
+            self.apiViewM.finalData = data   // adding API data to view model
             self.isLoading.stopAnimating()  // stoping indicator
             self.isLoading.isHidden = true // hiding the indicator
             
@@ -93,7 +93,7 @@ class BasicReportVC: UIViewController {
             self.collectionV.reloadData()  // reloadig collection view
             
         }
-    
+        
     }
     
     
@@ -101,7 +101,6 @@ class BasicReportVC: UIViewController {
         
         // selecting tempSetting according to segment
         switch sender.selectedSegmentIndex{
-        case 0 : tempSetting = "k"
         case 1 : tempSetting = "c"
         case 2 : tempSetting = "f"
         default : tempSetting = "k"

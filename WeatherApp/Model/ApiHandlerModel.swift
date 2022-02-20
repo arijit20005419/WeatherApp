@@ -27,29 +27,9 @@ class ApiHandlerModel{
             if response.error == nil{
                 switch response.result {
                 case .success(let data) :
-                    //                    print(data)
                     completion(data)
                 case .failure(let err) :
-                    print(err)
                     print(err.localizedDescription)
-                }
-            }
-            else{
-                print("Error: \(String(describing: response.error))")
-            }
-        }
-    }
-    
-    
-    func dowloadImg(imgUrl : String, completion : @escaping (Data) -> Void){
-        if let url = URL(string: imgUrl){
-            Session.default.download(url).responseData { imgData in
-                switch imgData.result{
-                case .success(let data):
-                    print(data)
-                    completion(data)
-                case .failure(let err) :
-                    print(err)
                 }
             }
         }
