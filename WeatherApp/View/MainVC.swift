@@ -108,9 +108,9 @@ extension MainVC : UIPickerViewDelegate{
 }
 
 
-// When manual entry "Continue" btn is enable
+
 extension MainVC : UITextFieldDelegate{
-    
+    // When manual entry "Continue" btn is enable
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let search = textField.text else {
             continueBtn.isEnabled = false
@@ -122,6 +122,30 @@ extension MainVC : UITextFieldDelegate{
                 if await locViewModel.getAddressNow(search){
                     continueBtn.isEnabled = true
                 }
+            }
+        }
+        return true
+    }
+    
+    // When manual entry "go" btn navigates to next screen
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let search = textField.text else {
+            continueBtn.isEnabled = false
+            return false
+        }
+
+        Task{
+            do {
+                if await locViewModel.getAddressNow(search){
+                    continueBtn.isEnabled = true
+                }
+            }
+        }
+        if locViewModel.didLocationFound{
+            if let vc = storyboard?.instantiateViewController(identifier: "basicreportvc") as? BasicReportVC{
+                show(vc, sender: self)
+                vc.latitude = locViewModel.coord["lat"] ?? ""
+                vc.longitude = locViewModel.coord["lon"] ?? ""
             }
         }
         return true

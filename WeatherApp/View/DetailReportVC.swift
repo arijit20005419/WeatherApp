@@ -9,7 +9,9 @@ import UIKit
 
 class DetailReportVC: UIViewController {
     
+    let tempViewModel = TempViewModel()
     var detailData : OpenWeather?  // contains api data
+    var detailTempSetting  = ""  // contains selected temp segment from BasicReportVC
     
     @IBOutlet weak var tbl: UITableView!
     
@@ -26,7 +28,10 @@ class DetailReportVC: UIViewController {
         
         // setting data
         currentDates.text = String(Date().formatted(date: .abbreviated, time: .omitted))
-        feelsLikeL.text = String(detailData?.current.feels_like ?? 0.0)
+
+        // setting temp according to selected tempSetting
+        feelsLikeL.text = tempViewModel.setTemperatur(temp: (detailData?.current.feels_like ?? 0.0), convertedTo: detailTempSetting)
+        
         visibilityL.text = String(detailData?.current.visibility ?? 0)
         pressureL.text = String(detailData?.current.pressure ?? 0)
         
@@ -45,11 +50,11 @@ extension DetailReportVC : UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cells") as! DailyCustomCells
         
-        // adding avg temp to a table cell
+        // adding avg temp to a table cell --> setting temp according to selected tempSetting
         let minTemp = detailData?.daily[indexPath.row].temp.min ?? 0
         let maxTemp = detailData?.daily[indexPath.row].temp.max ?? 0
-        let avgTemp = String(format: "%.2f", ((minTemp + maxTemp) / 2))
-        cell.tempDetail.text = avgTemp
+        let avgTemp = (minTemp + maxTemp) / 2
+        cell.tempDetail.text = tempViewModel.setTemperatur(temp: avgTemp, convertedTo: detailTempSetting)
         
         // adding image to a table cell
         let query = detailData?.current.weather.first?.icon ?? ""

@@ -498,7 +498,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="lyK-3K-Sms"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HiraginoSans-W7" family="Hiragino Sans" pointSize="25"/>
+                                                    <fontDescription key="fontDescription" name="HiraginoSans-W7" family="Hiragino Sans" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

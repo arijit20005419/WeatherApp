@@ -10,9 +10,13 @@ import UIKit
 class BasicReportVC: UIViewController {
     
     let apiViewM = ApiViewModel()
+    let tempViewModel = TempViewModel()
     
     var latitude : String = ""
     var longitude : String = ""
+    
+    var countCells = 0
+    var tempSetting = "k"  // defualt temp setting to kelvin
     
     @IBOutlet weak var isLoading: UIActivityIndicatorView!
     
@@ -35,8 +39,6 @@ class BasicReportVC: UIViewController {
     @IBOutlet weak var windIndL: UILabel!
     
     @IBOutlet weak var collectionV: UICollectionView!
-    
-    var countCells = 0
     
     override func viewDidLoad() {
         
@@ -62,7 +64,7 @@ class BasicReportVC: UIViewController {
         windIndL.text = nil
         
         apiViewM.getData(lati: latitude, longi: longitude) { data in
-//            adding API data to view model
+            //            adding API data to view model
             self.apiViewM.finalData = data
             self.isLoading.stopAnimating()  // stoping indicator
             self.isLoading.isHidden = true // hiding the indicator
@@ -72,11 +74,15 @@ class BasicReportVC: UIViewController {
             let imageURL = String("http://openweathermap.org/img/wn/\(query)@2x.png")
             self.weatherImg.loadcurrent(imageURL)
             
+            // setting timezone from api
             self.timeZoneL.text = data?.timezone
             self.dateTimeL.text = Date().formatted(date: .abbreviated, time: .omitted)
             
+            // setting temp
             self.tempL.text = "Temp"
-            self.tempIndL.text = "\(data?.current.temp ?? 0.0) K"
+            self.tempIndL.text = self.tempViewModel.setTemperatur(temp: (data?.current.temp ?? 0.0), convertedTo: self.tempSetting) //
+            
+            // setting humidity
             self.humidityL.text = "Humidity"
             self.humidityIndL.text = "\(data?.current.humidity ?? 0) %"
             self.windL.text = "Wind"
@@ -87,24 +93,23 @@ class BasicReportVC: UIViewController {
             self.collectionV.reloadData()  // reloadig collection view
             
         }
-       
-        // Do any additional setup after loading the view.
+    
     }
     
     
     @IBAction func tempSegment(_ sender: UISegmentedControl) {
-        var K = apiViewM.finalData?.current.temp ?? 0.0
         
-        if sender.selectedSegmentIndex == 0{
-            tempIndL.text = String(format: "%.2f", K) + " K"
-        }else if sender.selectedSegmentIndex == 1{
-            K = K - 273.15
-            tempIndL.text = String(format: "%.2f", K) + " ℃"
-        }else{
-            K = (K - 273.15) * (9/5) + 32
-            tempIndL.text =  String(format: "%.2f", K) + " ℉"
+        // selecting tempSetting according to segment
+        switch sender.selectedSegmentIndex{
+        case 0 : tempSetting = "k"
+        case 1 : tempSetting = "c"
+        case 2 : tempSetting = "f"
+        default : tempSetting = "k"
         }
-            
+        
+        self.tempIndL.text = self.tempViewModel.setTemperatur(temp: (apiViewM.finalData?.current.temp ?? 0.0), convertedTo: self.tempSetting)
+        
+        
     }
     
     
@@ -114,9 +119,11 @@ class BasicReportVC: UIViewController {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "detailreportvc") as? DetailReportVC{
                 show(vc, sender: self)
                 vc.detailData = data
+                vc.detailTempSetting = tempSetting
             }
         }
         else{
+            // alert box if navigation failed!
             let alertC = UIAlertController(title: "Unable to Navigate", message: "Data not Available", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertC.addAction(okAction)
