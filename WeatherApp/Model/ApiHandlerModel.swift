@@ -18,8 +18,6 @@ class ApiHandlerModel{
     func fetchData(lat : String, lon : String, completion : @escaping (OpenWeather) -> Void){
         let apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=alerts,minutely&appid=\(apiId)"
         
-        print(apiURL,"\n\n")
-        
         guard let url = URL(string: apiURL) else{
             print("Failed")
             return
@@ -29,7 +27,7 @@ class ApiHandlerModel{
             if response.error == nil{
                 switch response.result {
                 case .success(let data) :
-//                    print(data)
+                    //                    print(data)
                     completion(data)
                 case .failure(let err) :
                     print(err)
