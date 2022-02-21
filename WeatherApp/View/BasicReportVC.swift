@@ -148,8 +148,8 @@ extension BasicReportVC : UICollectionViewDataSource{
         cell.cellImg.loadcurrent(imageURL)
         
         // temp setting in cell
-        let temp = String(apiViewM.finalData?.hourly[indexPath.row].temp ?? 0.0)
-        cell.cellTempL.text = temp
+        let temp = apiViewM.finalData?.hourly[indexPath.row].temp ?? 0.0
+        cell.cellTempL.text = tempViewModel.setTemperatur(temp: temp, convertedTo: tempSetting)
         
         // time setting in cell
         let date = Date(timeIntervalSince1970: TimeInterval(apiViewM.finalData?.hourly[indexPath.row].dt ?? 0))
