@@ -108,7 +108,7 @@ class BasicReportVC: UIViewController {
         
         self.tempIndL.text = self.tempViewModel.setTemperatur(temp: (apiViewM.finalData?.current.temp ?? 0.0), convertedTo: self.tempSetting)
         
-        
+        self.collectionV.reloadData()  // reloadig collection view when temp is changed
     }
     
     
